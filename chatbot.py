@@ -1,8 +1,11 @@
+import os
 import openai
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity # type: ignore
+from dotenv import load_dotenv # type: ignore
 
-openai.api_key = <CHANGE ME>
+#Getting the OpenAI API key without revealing what it is
+load_dotenv()
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 #Embed the document chunks and relevant question here
 def createEmbedding(text):
