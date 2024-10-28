@@ -1,11 +1,40 @@
 import openai
-import glob
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
 openai.api_key = <CHANGE ME>
 
-#Reading in the transcript here
-file = open("transcript.txt", 'r')
-text = (file.read())
+#Embed the document chunks and relevant question here
+def createEmbedding(text):
+    response = openai.Embedding.create(
+        input = text,
+        model = "text-embedding-ada-002"
+    )
+    return response['data'][0]['embedding']
+
+#Splitting up inputted document into smaller chunks of chunk_size words
+def splitDocument(document, chunk_size = 2000):
+    chunks = []
+    words = document.split()
+    for i in range(0, len(words), chunk_size):
+        chunk = ' '.join(words[i : i + chunk_size])
+        chunks.append(chunk)
+    return chunks
+
+#Find the relevant info and return the top_n results
+def findSimilarChunk(questionEmbedding, docEmbedding, top_n = 5):
+    similarities = cosine_similarity([questionEmbedding], docEmbedding).flatten()
+    topIndexes = similarities.argsort()[-top_n:][::-1]
+    return topIndexes, similarities[topIndexes]
+
+
+#Reading in and chunking the document here
+file = open("textbook.txt", 'r', encoding='latin-1')
+document = (file.read())
 file.close()
+
+chunks = splitDocument(document)
+chunkEmbeddings = [createEmbedding(chunk) for chunk in chunks]
 
 #ChatGPT Functionality starts here
 question = ""
@@ -14,6 +43,13 @@ while question.lower() != "quit" :
     question = input("Question\n")
 
     if question.lower() != "quit":
+
+        #Getting the most relevant info out of document here
+        questionEmbedding = createEmbedding(question)
+        top_indices, top_similarities = findSimilarChunk(questionEmbedding, chunkEmbeddings)
+        text = "\n\n".join([chunks[i] for i in top_indices])
+
+        #Generate the answer here
         response = openai.ChatCompletion.create(
                 model = "gpt-3.5-turbo",
                 messages = [
