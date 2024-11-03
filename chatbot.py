@@ -2,6 +2,15 @@ import os
 import openai
 from sklearn.metrics.pairwise import cosine_similarity # type: ignore
 from dotenv import load_dotenv # type: ignore
+from flask import Flask, request, jsonify, send_from_directory # type: ignore
+from flask_cors import CORS # type: ignore
+
+#Setting up interaction between the HTML and Python
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return app.send_static_file('index.html')
 
 #Getting the OpenAI API key without revealing what it is
 load_dotenv()
@@ -30,38 +39,37 @@ def findSimilarChunk(questionEmbedding, docEmbedding, top_n = 5):
     topIndexes = similarities.argsort()[-top_n:][::-1]
     return topIndexes, similarities[topIndexes]
 
+@app.route('/askChatGPT', methods=['POST'])
+def askChatGPT():
+    #Getting the question from JS file
+    question = request.json.get('question')
 
-#Reading in and chunking the document here
-file = open("textbook.txt", 'r', encoding='latin-1')
-document = (file.read())
-file.close()
+    #Reading in and chunking the document here
+    file = open("textbook.txt", 'r', encoding='latin-1')
+    document = (file.read())
+    file.close()
 
-chunks = splitDocument(document)
-chunkEmbeddings = [createEmbedding(chunk) for chunk in chunks]
+    chunks = splitDocument(document)
+    chunkEmbeddings = [createEmbedding(chunk) for chunk in chunks]
 
-#ChatGPT Functionality starts here
-question = ""
-print("Type quit to exit this chatbot\n")
-while question.lower() != "quit" :
-    question = input("Question\n")
+    #Getting the most relevant info out of document here
+    questionEmbedding = createEmbedding(question)
+    top_indices, top_similarities = findSimilarChunk(questionEmbedding, chunkEmbeddings)
+    text = "\n\n".join([chunks[i] for i in top_indices])
 
-    if question.lower() != "quit":
+    #Generate the answer here
+    response = openai.ChatCompletion.create(
+            model = "gpt-3.5-turbo",
+            messages = [
+                {"role" : "system", "content" : text},
+                {"role": "user", "content": question}
+            ],
+            max_tokens = 256
+        )
 
-        #Getting the most relevant info out of document here
-        questionEmbedding = createEmbedding(question)
-        top_indices, top_similarities = findSimilarChunk(questionEmbedding, chunkEmbeddings)
-        text = "\n\n".join([chunks[i] for i in top_indices])
+    answer = response.choices[0].message['content'].strip()
+    return jsonify({"response" : answer})
 
-        #Generate the answer here
-        response = openai.ChatCompletion.create(
-                model = "gpt-3.5-turbo",
-                messages = [
-                    {"role" : "system", "content" : text},
-                    {"role": "user", "content": question}
-                ],
-                max_tokens = 256
-            )
-
-        answer = response.choices[0].message['content'].strip()
-        print("\nAnswer")
-        print(answer + "\n")
+#For testing locally only
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=5000)
