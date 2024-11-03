@@ -8,14 +8,6 @@ from flask_cors import CORS # type: ignore
 #Setting up interaction between the HTML and Python
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return app.send_static_file('index.html')
-
-#Getting the OpenAI API key without revealing what it is
-load_dotenv()
-openai.api_key = os.getenv('OPENAI_API_KEY')
-
 #Embed the document chunks and relevant question here
 def createEmbedding(text):
     response = openai.Embedding.create(
@@ -39,18 +31,26 @@ def findSimilarChunk(questionEmbedding, docEmbedding, top_n = 5):
     topIndexes = similarities.argsort()[-top_n:][::-1]
     return topIndexes, similarities[topIndexes]
 
+#Getting the OpenAI API key without revealing what it is
+load_dotenv()
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
+#Reading in and chunking the document here as soon as the website is accessed
+file = open("textbook.txt", 'r', encoding='latin-1')
+document = (file.read())
+file.close()
+
+chunks = splitDocument(document)
+chunkEmbeddings = [createEmbedding(chunk) for chunk in chunks]
+
+@app.route('/')
+def home():
+    return app.send_static_file('index.html')
+
 @app.route('/askChatGPT', methods=['POST'])
 def askChatGPT():
     #Getting the question from JS file
     question = request.json.get('question')
-
-    #Reading in and chunking the document here
-    file = open("textbook.txt", 'r', encoding='latin-1')
-    document = (file.read())
-    file.close()
-
-    chunks = splitDocument(document)
-    chunkEmbeddings = [createEmbedding(chunk) for chunk in chunks]
 
     #Getting the most relevant info out of document here
     questionEmbedding = createEmbedding(question)
