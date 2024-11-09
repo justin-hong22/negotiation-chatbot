@@ -1,6 +1,6 @@
 import os
 import openai
-from sklearn.metrics.pairwise import cosine_similarity # type: ignore
+#from sklearn.metrics.pairwise import cosine_similarity # type: ignore
 from dotenv import load_dotenv # type: ignore
 from flask import Flask, request, jsonify, send_from_directory # type: ignore
 
@@ -26,7 +26,8 @@ def splitDocument(document, chunk_size = 2000):
 
 #Find the relevant info and return the top_n results
 def findSimilarChunk(questionEmbedding, docEmbedding, top_n = 5):
-    similarities = cosine_similarity([questionEmbedding], docEmbedding).flatten()
+    #similarities = cosine_similarity([questionEmbedding], docEmbedding).flatten()
+    similarities = "";
     topIndexes = similarities.argsort()[-top_n:][::-1]
     return topIndexes, similarities[topIndexes]
 
