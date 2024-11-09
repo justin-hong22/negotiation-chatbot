@@ -3,7 +3,6 @@ import openai
 from sklearn.metrics.pairwise import cosine_similarity # type: ignore
 from dotenv import load_dotenv # type: ignore
 from flask import Flask, request, jsonify, send_from_directory # type: ignore
-from flask_cors import CORS # type: ignore
 
 #Setting up interaction between the HTML and Python
 app = Flask(__name__)
