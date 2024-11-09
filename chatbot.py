@@ -1,8 +1,9 @@
 import os
 import openai
-from sklearn.metrics.pairwise import cosine_similarity # type: ignore
 from dotenv import load_dotenv # type: ignore
 from flask import Flask, request, jsonify, send_from_directory # type: ignore
+import numpy as np
+import math
 
 #Setting up interaction between the HTML and Python
 app = Flask(__name__)
@@ -24,9 +25,18 @@ def splitDocument(document, chunk_size = 2000):
         chunks.append(chunk)
     return chunks
 
+def caluclateCosineSimilarity(v1, v2):
+    dot_product = sum(a * b for a, b in zip(v1, v2))
+    magnitude1 = math.sqrt(sum(a * a for a in v1))
+    magnitude2 = math.sqrt(sum(b * b for b in v2))
+    if magnitude1 == 0 or magnitude2 == 0:
+        return 0
+    return dot_product / (magnitude1 * magnitude2)
+
 #Find the relevant info and return the top_n results
 def findSimilarChunk(questionEmbedding, docEmbedding, top_n = 5):
-    similarities = cosine_similarity([questionEmbedding], docEmbedding).flatten()
+    similarities = [caluclateCosineSimilarity(questionEmbedding, doc) for doc in docEmbedding]
+    similarities = np.array(similarities)
     topIndexes = similarities.argsort()[-top_n:][::-1]
     return topIndexes, similarities[topIndexes]
 
