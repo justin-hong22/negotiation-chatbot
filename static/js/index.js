@@ -12,8 +12,7 @@ function answerQuestion()
     .then(response => response.json())
     .then(data => {
         const answer = data.response;
-        document.getElementById('answer_box').value = "Question : " + question + '\n\n' + "Answer : " + answer;
-        document.getElementById('question_box').value = "";
+        document.getElementById('answer_box').value = answer;
         addHistory(question, answer);
     })
     .catch(error => console.error("ERROR - ", error));   
@@ -31,4 +30,8 @@ function addHistory(question, answer)
 
     currentQuestion = "Question : " + question + '\n\n' + "Answer : " + answer + '\n\n' + "=".repeat(150) + '\n\n';
     firstQuestionBool = false;
+}
+
+function clearBox(box) {
+    box.value = "";
 }
