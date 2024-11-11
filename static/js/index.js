@@ -11,9 +11,9 @@ function answerQuestion()
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('answer_box').value = data.response;
-
-        const answer = document.getElementById('answer_box').value;
+        const answer = data.response;
+        document.getElementById('answer_box').value = "Question : " + question + '\n\n' + "Answer : " + answer;
+        document.getElementById('question_box').value = "";
         addHistory(question, answer);
     })
     .catch(error => console.error("ERROR - ", error));   
