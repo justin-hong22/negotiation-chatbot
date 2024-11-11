@@ -27,15 +27,15 @@ def splitDocument(document, chunk_size = 2000):
 
 def caluclateCosineSimilarity(v1, v2):
     dot_product = sum(a * b for a, b in zip(v1, v2))
-    magnitude1 = math.sqrt(sum(a * a for a in v1))
-    magnitude2 = math.sqrt(sum(b * b for b in v2))
-    if magnitude1 == 0 or magnitude2 == 0:
+    magnitudeA = math.sqrt(sum(a * a for a in v1))
+    magnitudeB = math.sqrt(sum(b * b for b in v2))
+    if magnitudeA == 0 or magnitudeB == 0:
         return 0
-    return dot_product / (magnitude1 * magnitude2)
+    return dot_product / (magnitudeA * magnitudeB)
 
 #Find the relevant info and return the top_n results
-def findSimilarChunk(questionEmbedding, docEmbedding, top_n = 5):
-    similarities = [caluclateCosineSimilarity(questionEmbedding, doc) for doc in docEmbedding]
+def findSimilarChunk(questionEmbedding, docEmbeddings, top_n = 5):
+    similarities = [caluclateCosineSimilarity(questionEmbedding, docEmbedding) for docEmbedding in docEmbeddings]
     similarities = np.array(similarities)
     topIndexes = similarities.argsort()[-top_n:][::-1]
     return topIndexes, similarities[topIndexes]
@@ -57,7 +57,7 @@ def askChatGPT():
                 {"role" : "system", "content" : text},
                 {"role": "user", "content": question}
             ],
-            max_tokens = 256
+            max_tokens = 512
         )
 
     answer = response.choices[0].message['content'].strip()
