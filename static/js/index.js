@@ -28,7 +28,7 @@ function addHistory(question, answer)
         document.getElementById('history_box').value = history;
     }
 
-    currentQuestion = "Question : " + question + '\n\n' + "Answer : " + answer + '\n\n' + "=".repeat(150) + '\n\n';
+    currentQuestion = "Question : " + question + '\n\n' + "Answer : " + answer + '\n\n' + "=".repeat(40) + '\n\n';
     firstQuestionBool = false;
 }
 
