@@ -76,11 +76,14 @@ load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 #Reading in and chunking the document here as soon as the website is accessed
-file = open("documents/textbook.txt", 'r', encoding='latin-1')
-document = (file.read())
-file.close()
+documentText = ""
+fileFolder = "documents"
+for file in os.listdir(fileFolder):
+    if file.endswith(".txt"):
+        with open(os.path.join(fileFolder, file), 'r', encoding = 'latin-1') as f:
+            documentText += f.read()
 
-chunks = splitDocument(document)
+chunks = splitDocument(documentText)
 chunkEmbeddings = [createEmbedding(chunk) for chunk in chunks]
 
 #For testing locally only
