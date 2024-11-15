@@ -11,27 +11,27 @@
     <body>
         <div class = "navbar">
             <ul>
-                <li><button class = "zh_btn" onclick = "">中文</button></li>
-                <li><button class = "jp_btn" onclick = "">日本語</button></li>
-                <li><button class = "en_btn" onclick = "">English</button></li>
+                <li><button class = "zh_btn" onclick = "changeLanguage('zh')">中文</button></li>
+                <li><button class = "jp_btn" onclick = "changeLanguage('jp')">日本語</button></li>
+                <li><button class = "en_btn" onclick = "changeLanguage('en')">English</button></li>
             </ul>
         </div>
-        <h1 class = "title">Business Negotiation Chatbot</h1>
+        <h1 class = "title" id = "title">Business Negotiation Chatbot</h1>
         <div class = "container">
             <div class = "ui_area">
                 <div class = "question_input">
-                    <h2 class = "input_title">Question Input</h2>
+                    <h2 class = "input_title" id = "input_title">Question Input</h2>
                     <textarea type = "text" id = "question_box" name = "question_box" onfocus="clearBox(this);"></textarea><br><br>
-                    <button class = "question_btn" onclick = "answerQuestion()">Generate Answer</button>
+                    <button class = "question_btn" id = "question_btn" onclick = "answerQuestion()">Generate Answer</button>
                 </div>
                 <div class = "answer_output">
-                    <h2 class = "output_title">Answer Output</h2>
+                    <h2 class = "output_title" id = "output_title">Answer Output</h2>
                     <textarea type = "text" id = "answer_box" name = "answer_box" readonly></textarea>
                 </div>
             </div>
             
             <div class = "history">
-                <h2 class = "history_title">Chat History</h2>
+                <h2 class = "history_title" id = "history_title">Chat History</h2>
                 <textarea type = "text" id = "history_box" name = "history_box" readonly></textarea>
             </div>
         </div>
