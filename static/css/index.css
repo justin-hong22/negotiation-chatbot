@@ -45,8 +45,8 @@ body
     line-height: 1.5;
     display: block;
 
-    width: 6vw;
-    height: 7vh;
+    width: 120px;
+    height: 50px;
 }
 
 .navbar li:first-child button
@@ -153,8 +153,8 @@ h2
 @media screen and (max-width: 750px)
 {
     body{ background-color: #A5D6A7 }
-    .navbar ul { height: 3vh; margin-bottom: 0; }
-    .navbar li button { width: 15vw; height: 3vh; font-size: 11px; }
+    .navbar ul { height: 25px; margin-bottom: 0; }
+    .navbar li button { width: 70px; height: 25px; font-size: 11px; }
     .title { margin-top: 8vw;}
     .question_input, .answer_output { float: none; margin-left: 4vw; margin-right: 5vw; }
     #question_box, #answer_box { width: 100%; height: 20vh; } 
