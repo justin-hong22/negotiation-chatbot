@@ -54,7 +54,7 @@ def askChatGPT():
     response = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = [
-                {"role" : "system", "content" : text},
+                {"role" : "system", "content" : f"You are answering questions based on the following text: {text}. Prioritize using this text to answer the question."},
                 {"role": "user", "content": question}
             ],
             max_tokens = 512
