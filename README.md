@@ -19,4 +19,4 @@ A lot of times, regular ChatGPT gives out too general information, and students 
 
 The project is available in English, Japanese and Chinese. However, the Chatbot can answer any question in any desired language. The user interface is designed to be used on either a desktop, laptop, tablet or mobile phone.
 
-The link to the chatbot is hosted by Heroku and can be found in the following URL - [Negotiation Chatbot Link](negotiation-bot-f4a216d5a4ad.herokuapp.com)
+The link to the chatbot is hosted by Heroku and can be found in the following URL - [Negotiation Chatbot Link](https://negotiation-bot-f4a216d5a4ad.herokuapp.com)
