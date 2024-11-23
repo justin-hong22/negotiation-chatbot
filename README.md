@@ -1,6 +1,6 @@
 # **About the Developer**
 
-This is a project by Justin Hong from Kyoto University Graduate School of Mangement. The related course is called "Workshop" and his supervisor is Will Baber. 
+This is a project by Justin Hong from Kyoto University Graduate School of Management. The related course is called "Workshop" and his supervisor is Will Baber. 
 
 # **Project Introduction**
 
