@@ -1,22 +1,37 @@
-# **About the Developer**
+# **Negotiation Chatbot**
 
-This is a project by Justin Hong from Kyoto University Graduate School of Management. The related course is called "Workshop" and his supervisor is Will Baber. 
+## **About the Developer**
+This project was created by **Justin Hong**, a student at the **Kyoto University Graduate School of Management**, under the guidance of Professor **Will Baber** for the course *"Workshop."* Professor Baber has provided business negotiation documents, textbooks, and interview transcripts to support the development of this chatbot.
 
-# **Project Introduction**
 
-The idea of this project is to use OpenAI API to create a chatbot specifically for Business Negotiation. The backend generates answers based on the question the user provides. Professor Baber has generously provided some of his business negotiation documents, textbooks and interview transcripts to assist with this project. Below are the list of programming languages use to build the chatbot.
+## **Project Introduction**
+The **Negotiation Chatbot** is designed to help students learn about business negotiation by using the OpenAI API as a study aid. Unlike regular ChatGPT, which is used for general questions, this chatbot is designed specifically for negotiation-related queries.
 
- 1. HTML - Create the text, input and output fields, and button for an easy to use user interface. 
- 2. CSS - To make the interface look elegant and attractive while also adding support for both desktop and mobile devices
- 3. JavaScript - to make API calls to the Python backend, and adds support in English, Japanese and Chinese
- 4. Python - accesses OpenAI API and generates answers based on the given question in a business negotiation context. It references the documents provided by Professor Baber to ensure every answer is about negotiation
+The backend uses OpenAI's API to generate answers based on the user's input while referencing Professor Baber’s materials to ensure relevance and accuracy.
 
-# **Purpose of the Project**
 
-A lot of times, regular ChatGPT gives out too general information, and students want something specific. This project allows students to learn about negotiation which is a complex subject. Professors can also benefit by uploading their research and documents to let students quickly look up topics related to negotiation. This makes learning much more efficient and while assisting people with negotiations.
+## **Programming Languages and Technologies**
+This project uses the following technologies:
 
-# **Access**
+- **HTML**: To create the user interface, including text, input and output fields, and buttons for an easy-to-use experience.
+- **CSS**: To enhance the design, making the interface elegant, responsive, and compatible with both desktop and mobile devices.
+- **JavaScript**: To handle API calls to the Python backend and add multilingual support for **English**, **Japanese**, and **Chinese**.
+- **Python**: To process user input, access the OpenAI API, and generate negotiation-specific answers. The Python backend also references Professor Baber’s materials to ensure the responses are accurate and contextually relevant.
 
-The project is available in English, Japanese and Chinese. However, the Chatbot can answer any question in any desired language. The user interface is designed to be used on either a desktop, laptop, tablet or mobile phone.
 
-The link to the chatbot is hosted by Heroku and can be found in the following URL - [Negotiation Chatbot Link](https://negotiation-bot-f4a216d5a4ad.herokuapp.com)
+## **Purpose of the Project**
+The **Negotiation Chatbot** aims to:
+- Address the limitations of general-purpose chatbots by providing negotiation-specific questions and answers.
+- Assist students in understanding business negotiation by offering direct and contextualized answers.
+- Enable professors to upload their research and teaching materials, allowing students to quickly access key information and improve learning efficiency.
+
+
+## **Features**
+- **Multilingual Support**: Users can interact with the chatbot in English, Japanese, or Chinese. The chatbot can also answer questions in any desired language.
+- **Responsive Design**: The interface is compatible with desktops, laptops, tablets, and mobile devices.
+- **Efficient Learning**: Students and professionals can quickly look up negotiation topics, while professors can customize the chatbot with their materials for tailored learning.
+
+
+## **Access**
+The chatbot is hosted on Heroku and can be accessed via the following link:  
+[**Negotiation Chatbot Link**](https://negolearnbot-fb68aa87949a.herokuapp.com/)
